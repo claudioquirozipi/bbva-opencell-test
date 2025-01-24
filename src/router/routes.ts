@@ -10,11 +10,27 @@ export const routes: RouteDefinition[] = [
     },
   },
   {
-    path: '/second',
-    name: 'second',
-    component: 'second-page',
+    path: '/create-client',
+    name: 'create-client',
+    component: 'create-client-page',
     action: async () => {
-      await import('../pages/second/second-page.js');
+      await import('../pages/create-client/create-client-page.js');
+    },
+  },
+  {
+    path: '/edit-client',
+    name: 'edit-client',
+    component: 'edit-client-page',
+    action: async () => {
+      await import('../pages/edit-client/edit-client-page.js');
+    },
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: 'login-page',
+    action: async () => {
+      await import('../pages/login/login-page.js');
     },
   }
 ];

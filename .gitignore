@@ -1,0 +1,53 @@
+# Dependencias de Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de construcción/compilación
+dist/
+build/
+out/
+
+# Archivos de configuración de IDE
+.idea/
+.vscode/
+*.sublime-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Archivos de logs
+logs/
+*.log
+
+# Cache de pruebas
+coverage/
+.cache/
+
+# Configuración de herramientas
+*.env
+.env.local
+.env.*.local
+
+# Archivos relacionados a OpenCells (si aplica)
+.local-cells/
+.open-cells-config/
+open-cells.lock
+cell-generated/
+temp-cells/
+
+# Otros archivos que no deberían ser rastreados
+*.bak
+*.swp
+*.zip
+*.tar
+*.gz
+
+# Ignorar configuraciones personales
+*.local
