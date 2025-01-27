@@ -28,6 +28,9 @@ export class HomePage extends LitElement {
     this.elementController.publish("ch-client", clients)
   }
 
+  handleCreate(){
+    this.pageController.navigate("create-client")
+  }
   handleDelete(id: number) {
     const newListClient = this.clients.filter(client => client.id !== id)
     this.elementController.publish("ch-client", newListClient)
@@ -36,8 +39,28 @@ export class HomePage extends LitElement {
   }
 
   static styles = css`
+    .titleContainer {
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem 0 ;
+
+    }
     h1 {
       color: red;
+      margin : 0;
+
+    }
+    .createButton {
+      background-color: #2ecc71;
+      border: none;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .createButton:hover {
+      background-color: #27ae60;
     }
     .list {
       display: grid;
@@ -78,7 +101,7 @@ export class HomePage extends LitElement {
 
     .card .client-type {
       font-weight: bold;
-      color: #007bff;
+      color: #3498db;
       margin-bottom: 1rem;
     }
 
@@ -89,7 +112,7 @@ export class HomePage extends LitElement {
     }
 
     .card .actions button {
-      background-color: #007bff;
+      background-color: #3498db;
       border: none;
       color: #fff;
       padding: 0.5rem 1rem;
@@ -99,20 +122,23 @@ export class HomePage extends LitElement {
     }
 
     .card .actions button:hover {
-      background-color: #0056b3;
+      background-color: #2980b9;
     }
 
     .card .actions .delete {
-      background-color: #dc3545;
+      background-color: #e74c3c;
     }
 
     .card .actions .delete:hover {
-      background-color: #a71d2a;
+      background-color: #c0392b;
     }
   `;
   render() {
     return html`
-      <h1>Lista de Clientes</h1>
+      <div class="titleContainer">
+        <h1>Lista de Clientes</h1>
+        <button class="createButton" @click="${this.handleCreate}">Crear cliente</button>
+      </div>
       <div class="grid">
         ${this.clients.map((client: Client) => html`
           <div class="card">

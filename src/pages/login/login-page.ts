@@ -1,6 +1,7 @@
-import { html,css, LitElement } from 'lit';
-import { PageController } from '@open-cells/page-controller';
 import { customElement, query, state } from 'lit/decorators.js';
+import { PageController } from '@open-cells/page-controller';
+import { html,css, LitElement } from 'lit';
+
 import { users } from '../../data/user';
 
 
@@ -15,9 +16,7 @@ export class LoginPage extends LitElement {
 
   handleSubmit(e: Event) {
     e.preventDefault()
-    console.log("submit")
     const formData = new FormData(e.target as HTMLFormElement);
-    // console.log(Array.from(formData.entries()));
     const email = formData.get("email");
     const password= formData.get("password");
     const user = users.find(user => user.email === email && user.password === password);
@@ -25,6 +24,7 @@ export class LoginPage extends LitElement {
       this.form.reset();
       localStorage.setItem("token", user.email)
       this.pageController.navigate("home")
+      this.error = false
     } else {
       this.error = true
     }
