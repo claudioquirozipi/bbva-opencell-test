@@ -12,29 +12,34 @@ import { clients, type Client } from '../../data/client'
 export class HomePage extends LitElement {
   pageController = new PageController(this);
   elementController = new ElementController(this);
-  clients: Client[] = []
+  // clients: Client[] | null = null;
 
   constructor() {
     super()
-    this.elementController.subscribe("ch-client", (data: Client[]) => {
-      console.log("data subcribe", data)
-      this.clients = clients;
+    // this.elementController.subscribe("ch-client", (data: Client[]) => {
+    //   console.log("data subcribe fffff", data)
+    //   this.requestUpdate()
+    // })
+    this.elementController.subscribe("ch-client-create", (data: Client) => {
+      clients.push(data)
       this.requestUpdate()
     })
   }
 
-  onPageEnter() {
-    console.log("onPageEnter")
-    this.elementController.publish("ch-client", clients)
-  }
+  // onPageEnter() {
+  //   console.log("onPageEnter")
+  //   if(clients === null ) this.elementController.publish("ch-client", clients)
+  // }
 
   handleCreate(){
     this.pageController.navigate("create-client")
   }
   handleDelete(id: number) {
-    const newListClient = this.clients.filter(client => client.id !== id)
-    this.elementController.publish("ch-client", newListClient)
-    this.clients = newListClient
+    //  clients = clients.filter(client => client.id !== id)
+    const clientIndex = clients.findIndex((client:Client) => client.id === id )
+    clients.splice(clientIndex, 1)
+    // this.elementController.publish("ch-client", newListClient)
+    // this.clients = newListClient
     this.requestUpdate();
   }
 
@@ -140,7 +145,7 @@ export class HomePage extends LitElement {
         <button class="createButton" @click="${this.handleCreate}">Crear cliente</button>
       </div>
       <div class="grid">
-        ${this.clients.map((client: Client) => html`
+        ${clients.map((client: Client) => html`
           <div class="card">
       <h2>${client.name}</h2>
       <p>Email: ${client.email}</p>

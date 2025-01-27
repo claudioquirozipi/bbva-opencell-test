@@ -1,6 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { PageController } from '@open-cells/page-controller';
-import { customElement } from 'lit/decorators.js';
+import { customElement, query } from 'lit/decorators.js';
 import { ElementController } from '@open-cells/element-controller';
 import { Client, ClientType } from '../../data/client';
 
@@ -9,6 +9,9 @@ export class CreateClientPage extends LitElement {
   pageController = new PageController(this);
   elementController = new ElementController(this);
 
+  @query("#form") form!: HTMLFormElement
+
+  // client: Client[]= [];
   // {
   //   id: 1,
   //   name: "Juan Pérez",
@@ -17,6 +20,12 @@ export class CreateClientPage extends LitElement {
   //   city: "Madrid",
   //   clientType: "Premium",
   // },
+
+  // onPageEnter(){
+  //   this.elementController.subscribe("ch-client", (data: Client[])=>{
+  //     this.client = data
+  //   })
+  // }
   handleSubmit(e: Event) {
     e.preventDefault()
     const formData = new FormData(e.target as HTMLFormElement);
@@ -29,8 +38,8 @@ export class CreateClientPage extends LitElement {
       name, email, phone, city, clientType
     })
     if (name && email && phone && city && clientType) {
-      this.elementController.subscribe("ch-client", (data:Client[])=>{
-        console.log("data", data)
+   
+        // console.log("data", this.client)
         const newClient : Client  = {
           id: Math.random(), 
           city, 
@@ -39,10 +48,11 @@ export class CreateClientPage extends LitElement {
           name, phone
         }
         console.log({newClient})
-        data.push(newClient)
-        this.elementController.publish("ch-client", data)
+        // this.client.push(newClient)
+        this.form.reset()
+        this.elementController.publish("ch-client-create",newClient)
         this.pageController.navigate("home")
-      })
+
     }
 
   }

@@ -9,7 +9,7 @@ export interface Client {
   
   export type ClientType = "Premium" | "Standard";
   
-  export const clients: Client[] = [
+  export let clients: Client[] = [
     {
       id: 1,
       name: "Juan Pérez",
