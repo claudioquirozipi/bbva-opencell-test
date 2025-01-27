@@ -3,6 +3,7 @@ import { PageController } from '@open-cells/page-controller';
 import { customElement, query } from 'lit/decorators.js';
 import { ElementController } from '@open-cells/element-controller';
 import { Client, ClientType } from '../../data/client';
+import "../../components/layout"
 
 @customElement('create-client-page')
 export class CreateClientPage extends LitElement {
@@ -11,21 +12,12 @@ export class CreateClientPage extends LitElement {
 
   @query("#form") form!: HTMLFormElement
 
-  // client: Client[]= [];
-  // {
-  //   id: 1,
-  //   name: "Juan Pérez",
-  //   email: "juan@example.com",
-  //   phone: "123-456-7890",
-  //   city: "Madrid",
-  //   clientType: "Premium",
-  // },
+  
+  onPageEnter(){
+    const token = localStorage.getItem("token")
+    if(!token) this.elementController.navigate("login")
+  }
 
-  // onPageEnter(){
-  //   this.elementController.subscribe("ch-client", (data: Client[])=>{
-  //     this.client = data
-  //   })
-  // }
   handleSubmit(e: Event) {
     e.preventDefault()
     const formData = new FormData(e.target as HTMLFormElement);
@@ -88,29 +80,31 @@ export class CreateClientPage extends LitElement {
 
   render() {
     return html`
-            <div class="container">
-        <form id="form" @submit="${this.handleSubmit}"  class="form">
-          <p>Crear cliente</p>
-          <div class="row">
-            <label for="name" >Nombre</label>
-            <input id="name" type="text" name="name"/>
-          </div>
+        <layout-container>
 
-          <div class="row">
-            <label for="email" >Correo</label>
-            <input id="email" type="email" name="email"/>
-          </div>
-
-          <div class="row">
-            <label for="phone" >Teléfono</label>
-            <input id="phone" type="text" name="phone"/>
-          </div>
-
+          <div class="container">
+            <form id="form" @submit="${this.handleSubmit}"  class="form">
+              <p>Crear cliente</p>
+              <div class="row">
+                <label for="name" >Nombre</label>
+                <input id="name" type="text" name="name"/>
+              </div>
+              
+              <div class="row">
+                <label for="email" >Correo</label>
+                <input id="email" type="email" name="email"/>
+              </div>
+              
+              <div class="row">
+                <label for="phone" >Teléfono</label>
+                <input id="phone" type="text" name="phone"/>
+              </div>
+              
           <div class="row">
             <label for="city" >Ciudad</label>
             <input id="city" type="text" name="city"/>
           </div>
-
+          
           <div class="row">
             <label for="clientType" >Tipo de cliente</label>
             <select id="clientType" name="clientType">
@@ -119,12 +113,13 @@ export class CreateClientPage extends LitElement {
             </select>
             
           </div>
-
+          
           <button type="submit"  >Login</button>
           
           
         </form>
       </div>
+    </layout-container>
     `;
   }
 }

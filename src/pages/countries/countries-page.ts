@@ -2,6 +2,7 @@ import { ElementController } from '@open-cells/element-controller';
 import { PageController } from '@open-cells/page-controller';
 import { customElement } from 'lit/decorators.js';
 import { html, css, LitElement } from 'lit';
+import "../../components/layout"
 
 import '@material/web/button/outlined-button.js';
 
@@ -34,10 +35,12 @@ export class CountriesPage extends LitElement {
     
   }
 
+  
+  
   async onPageEnter(){
-    console.log("hola")
+    const token = localStorage.getItem("token")
+    if(!token) this.elementController.navigate("login")
     const countriesResponse = await this.fetchCountries()
-    console.log({countriesResponse})
     this.countries = countriesResponse;
     this.requestUpdate()
   }
@@ -67,19 +70,22 @@ export class CountriesPage extends LitElement {
 `
   render() {
     return html`
-    <h1>Paises</h1>
+        <layout-container>
 
-    <div class="grid">
-      ${this.countries.map((country: any)=>(html`<div class="item">
-        
-        <img src="${country.flags.png}" />
-        <p>
-
-          ${country.name.common}
-        </p>
+          <h1>Paises</h1>
+          
+          <div class="grid">
+            ${this.countries.map((country: any)=>(html`<div class="item">
+              
+              <img src="${country.flags.png}" />
+              <p>
+                
+                ${country.name.common}
+              </p>
       
       </div>`))}
     </div>
+            </layout-container>
 
     `;
   }

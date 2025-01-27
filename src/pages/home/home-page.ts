@@ -3,6 +3,8 @@ import { PageController } from '@open-cells/page-controller';
 import { customElement } from 'lit/decorators.js';
 import { html, css, LitElement } from 'lit';
 
+import "../../components/layout"
+
 import '@material/web/button/outlined-button.js';
 
 import { clients, type Client } from '../../data/client'
@@ -12,34 +14,28 @@ import { clients, type Client } from '../../data/client'
 export class HomePage extends LitElement {
   pageController = new PageController(this);
   elementController = new ElementController(this);
-  // clients: Client[] | null = null;
 
   constructor() {
     super()
-    // this.elementController.subscribe("ch-client", (data: Client[]) => {
-    //   console.log("data subcribe fffff", data)
-    //   this.requestUpdate()
-    // })
     this.elementController.subscribe("ch-client-create", (data: Client) => {
       clients.push(data)
       this.requestUpdate()
     })
   }
 
-  // onPageEnter() {
-  //   console.log("onPageEnter")
-  //   if(clients === null ) this.elementController.publish("ch-client", clients)
-  // }
 
+  onPageEnter(){
+    const token = localStorage.getItem("token")
+    if(!token) this.elementController.navigate("login")
+  }
+
+  
   handleCreate(){
     this.pageController.navigate("create-client")
   }
   handleDelete(id: number) {
-    //  clients = clients.filter(client => client.id !== id)
     const clientIndex = clients.findIndex((client:Client) => client.id === id )
     clients.splice(clientIndex, 1)
-    // this.elementController.publish("ch-client", newListClient)
-    // this.clients = newListClient
     this.requestUpdate();
   }
 
@@ -138,8 +134,10 @@ export class HomePage extends LitElement {
       background-color: #c0392b;
     }
   `;
+
   render() {
     return html`
+    <layout-container>
       <div class="titleContainer">
         <h1>Lista de Clientes</h1>
         <button class="createButton" @click="${this.handleCreate}">Crear cliente</button>
@@ -147,22 +145,22 @@ export class HomePage extends LitElement {
       <div class="grid">
         ${clients.map((client: Client) => html`
           <div class="card">
-      <h2>${client.name}</h2>
-      <p>Email: ${client.email}</p>
-      <p>Phone: ${client.phone}</p>
-      <p>City: ${client.city}</p>
-      <p class="client-type">Type: ${client.clientType}</p>
-      <div class="actions">
-        <button class="edit">Edit</button>
-        <button 
-          class="delete"
+            <h2>${client.name}</h2>
+            <p>Email: ${client.email}</p>
+            <p>Phone: ${client.phone}</p>
+            <p>City: ${client.city}</p>
+            <p class="client-type">Type: ${client.clientType}</p>
+            <div class="actions">
+              <button class="edit">Edit</button>
+              <button 
+              class="delete"
           @click=${() => this.handleDelete(client.id)}
-        >Delete</button>
+          >Delete</button>
+        </div>
       </div>
-    </div>
-            `)}
-  </div>
-
+      `)}
+      </div>
+    </layout-container>
     `;
   }
 }

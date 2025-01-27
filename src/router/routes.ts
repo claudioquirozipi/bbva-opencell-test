@@ -18,14 +18,6 @@ export const routes: RouteDefinition[] = [
     },
   },
   {
-    path: '/edit-client',
-    name: 'edit-client',
-    component: 'edit-client-page',
-    action: async () => {
-      await import('../pages/edit-client/edit-client-page.js');
-    },
-  },
-  {
     path: '/countries',
     name: 'countries',
     component: 'countries-page',
