@@ -8,6 +8,9 @@ import { styles } from './app-index.css.js';
 startApp({
   routes,
   mainNode: 'app-content',
+  appConfig:{
+    hola: "mundo"
+  }
 });
 
 @customElement('app-index')

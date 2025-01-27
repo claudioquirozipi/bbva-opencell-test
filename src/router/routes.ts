@@ -26,6 +26,14 @@ export const routes: RouteDefinition[] = [
     },
   },
   {
+    path: '/countries',
+    name: 'countries',
+    component: 'countries-page',
+    action: async () => {
+      await import('../pages/countries/countries-page.js');
+    },
+  },
+  {
     path: '/login',
     name: 'login',
     component: 'login-page',
